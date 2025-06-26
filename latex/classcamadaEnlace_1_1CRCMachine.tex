@@ -1,0 +1,104 @@
+\hypertarget{classcamadaEnlace_1_1CRCMachine}{}\doxysection{camada\+Enlace.\+CRCMachine Class Reference}
+\label{classcamadaEnlace_1_1CRCMachine}\index{camadaEnlace.CRCMachine@{camadaEnlace.CRCMachine}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classcamadaEnlace_1_1CRCMachine_a1526ba4e08c0d1783a00dac9c876938f}\label{classcamadaEnlace_1_1CRCMachine_a1526ba4e08c0d1783a00dac9c876938f}} 
+def \mbox{\hyperlink{classcamadaEnlace_1_1CRCMachine_a1526ba4e08c0d1783a00dac9c876938f}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self)
+\begin{DoxyCompactList}\small\item\em Construtor que inicializa a instância com o polinômio crc32. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classcamadaEnlace_1_1CRCMachine_aad1dfc3deb9a765f28dd95aec03afcb6}{crc\+Division}} (self, message)
+\begin{DoxyCompactList}\small\item\em Função que faz a divisão de uma string binária pelo polinômio crc definido na instância da classe \mbox{\hyperlink{classcamadaEnlace_1_1CRCMachine}{CRCMachine}}. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classcamadaEnlace_1_1CRCMachine_a7a03d7c83fe93b09a0fad1755ecca3bc}{crc\+Remainder}} (self, message)
+\begin{DoxyCompactList}\small\item\em Função que retorna o resto da divisão por polinômio crc à uma string binária, após adição de 31 zeros à string inserida. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classcamadaEnlace_1_1CRCMachine_aba36b0ad6d88f18925b029afdcc5ae7d}{verify\+Crc}} (self, message)
+\begin{DoxyCompactList}\small\item\em Função que faz verificação de erros em uma mensagem usando o protocolo crc. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classcamadaEnlace_1_1CRCMachine_ab6b4d64c8bfa454a5505036b58221968}{remove\+Crc}} (self, message)
+\begin{DoxyCompactList}\small\item\em Função que de uma string o resto da divisão pelo polinômio crc. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classcamadaEnlace_1_1CRCMachine_a93a15205d3d5636282ccf21c54536b0d}\label{classcamadaEnlace_1_1CRCMachine_a93a15205d3d5636282ccf21c54536b0d}} 
+{\bfseries polynomial}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcamadaEnlace_1_1CRCMachine_aad1dfc3deb9a765f28dd95aec03afcb6}\label{classcamadaEnlace_1_1CRCMachine_aad1dfc3deb9a765f28dd95aec03afcb6}} 
+\index{camadaEnlace.CRCMachine@{camadaEnlace.CRCMachine}!crcDivision@{crcDivision}}
+\index{crcDivision@{crcDivision}!camadaEnlace.CRCMachine@{camadaEnlace.CRCMachine}}
+\doxysubsubsection{\texorpdfstring{crcDivision()}{crcDivision()}}
+{\footnotesize\ttfamily def camada\+Enlace.\+CRCMachine.\+crc\+Division (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{message }\end{DoxyParamCaption})}
+
+
+
+Função que faz a divisão de uma string binária pelo polinômio crc definido na instância da classe \mbox{\hyperlink{classcamadaEnlace_1_1CRCMachine}{CRCMachine}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em bit\+\_\+string} & string binária \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+resto da divisão de bit\+\_\+string pelo polinômio crc 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcamadaEnlace_1_1CRCMachine_a7a03d7c83fe93b09a0fad1755ecca3bc}\label{classcamadaEnlace_1_1CRCMachine_a7a03d7c83fe93b09a0fad1755ecca3bc}} 
+\index{camadaEnlace.CRCMachine@{camadaEnlace.CRCMachine}!crcRemainder@{crcRemainder}}
+\index{crcRemainder@{crcRemainder}!camadaEnlace.CRCMachine@{camadaEnlace.CRCMachine}}
+\doxysubsubsection{\texorpdfstring{crcRemainder()}{crcRemainder()}}
+{\footnotesize\ttfamily def camada\+Enlace.\+CRCMachine.\+crc\+Remainder (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{message }\end{DoxyParamCaption})}
+
+
+
+Função que retorna o resto da divisão por polinômio crc à uma string binária, após adição de 31 zeros à string inserida. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em bit\+\_\+string} & string binária \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+resto da divisão da string modificada pelo polinômio crc 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcamadaEnlace_1_1CRCMachine_ab6b4d64c8bfa454a5505036b58221968}\label{classcamadaEnlace_1_1CRCMachine_ab6b4d64c8bfa454a5505036b58221968}} 
+\index{camadaEnlace.CRCMachine@{camadaEnlace.CRCMachine}!removeCrc@{removeCrc}}
+\index{removeCrc@{removeCrc}!camadaEnlace.CRCMachine@{camadaEnlace.CRCMachine}}
+\doxysubsubsection{\texorpdfstring{removeCrc()}{removeCrc()}}
+{\footnotesize\ttfamily def camada\+Enlace.\+CRCMachine.\+remove\+Crc (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{message }\end{DoxyParamCaption})}
+
+
+
+Função que de uma string o resto da divisão pelo polinômio crc. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & string binária \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+string inserida sem o resto da divisão pelo polinômio 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcamadaEnlace_1_1CRCMachine_aba36b0ad6d88f18925b029afdcc5ae7d}\label{classcamadaEnlace_1_1CRCMachine_aba36b0ad6d88f18925b029afdcc5ae7d}} 
+\index{camadaEnlace.CRCMachine@{camadaEnlace.CRCMachine}!verifyCrc@{verifyCrc}}
+\index{verifyCrc@{verifyCrc}!camadaEnlace.CRCMachine@{camadaEnlace.CRCMachine}}
+\doxysubsubsection{\texorpdfstring{verifyCrc()}{verifyCrc()}}
+{\footnotesize\ttfamily def camada\+Enlace.\+CRCMachine.\+verify\+Crc (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{message }\end{DoxyParamCaption})}
+
+
+
+Função que faz verificação de erros em uma mensagem usando o protocolo crc. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & mensagem na qual se deseja fazer verificação de erros \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\char`\"{}erro crc\char`\"{} caso erro seja detectado 
+
+\char`\"{}ok\char`\"{} caso nenhum erro seja detectado 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+camada\+Enlace.\+py\end{DoxyCompactItemize}

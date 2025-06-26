@@ -1,0 +1,73 @@
+\hypertarget{classcamadaEnlace_1_1Hamming}{}\doxysection{camada\+Enlace.\+Hamming Class Reference}
+\label{classcamadaEnlace_1_1Hamming}\index{camadaEnlace.Hamming@{camadaEnlace.Hamming}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classcamadaEnlace_1_1Hamming_aaa31b266a006f3e1e028a0b40ccb8595}{remove\+Parity\+Bits}} (self, message)
+\begin{DoxyCompactList}\small\item\em Função que remove os bits de paridade de uma string binária. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classcamadaEnlace_1_1Hamming_ab2ec89c0e6c07dbdee84b160caeaa5b2}{hamming\+Encode}} (self, bit\+\_\+string)
+\begin{DoxyCompactList}\small\item\em Função que faz codificação \mbox{\hyperlink{classcamadaEnlace_1_1Hamming}{Hamming}} de uma string binária. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classcamadaEnlace_1_1Hamming_aeea35ebc0caaf360570cdb70d8b693f7}{detect\+Error}} (self, bit\+\_\+string)
+\begin{DoxyCompactList}\small\item\em Função que faz detecção de erros por codificação \mbox{\hyperlink{classcamadaEnlace_1_1Hamming}{Hamming}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcamadaEnlace_1_1Hamming_aeea35ebc0caaf360570cdb70d8b693f7}\label{classcamadaEnlace_1_1Hamming_aeea35ebc0caaf360570cdb70d8b693f7}} 
+\index{camadaEnlace.Hamming@{camadaEnlace.Hamming}!detectError@{detectError}}
+\index{detectError@{detectError}!camadaEnlace.Hamming@{camadaEnlace.Hamming}}
+\doxysubsubsection{\texorpdfstring{detectError()}{detectError()}}
+{\footnotesize\ttfamily def camada\+Enlace.\+Hamming.\+detect\+Error (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{bit\+\_\+string }\end{DoxyParamCaption})}
+
+
+
+Função que faz detecção de erros por codificação \mbox{\hyperlink{classcamadaEnlace_1_1Hamming}{Hamming}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em string} & string binária que passará por detecção de erros \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+posição do bit em que ocorreu o erro, retorna 0 caso não haja erro 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcamadaEnlace_1_1Hamming_ab2ec89c0e6c07dbdee84b160caeaa5b2}\label{classcamadaEnlace_1_1Hamming_ab2ec89c0e6c07dbdee84b160caeaa5b2}} 
+\index{camadaEnlace.Hamming@{camadaEnlace.Hamming}!hammingEncode@{hammingEncode}}
+\index{hammingEncode@{hammingEncode}!camadaEnlace.Hamming@{camadaEnlace.Hamming}}
+\doxysubsubsection{\texorpdfstring{hammingEncode()}{hammingEncode()}}
+{\footnotesize\ttfamily def camada\+Enlace.\+Hamming.\+hamming\+Encode (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{bit\+\_\+string }\end{DoxyParamCaption})}
+
+
+
+Função que faz codificação \mbox{\hyperlink{classcamadaEnlace_1_1Hamming}{Hamming}} de uma string binária. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em string} & string que passará por codificação \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+string com bits de paridade 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcamadaEnlace_1_1Hamming_aaa31b266a006f3e1e028a0b40ccb8595}\label{classcamadaEnlace_1_1Hamming_aaa31b266a006f3e1e028a0b40ccb8595}} 
+\index{camadaEnlace.Hamming@{camadaEnlace.Hamming}!removeParityBits@{removeParityBits}}
+\index{removeParityBits@{removeParityBits}!camadaEnlace.Hamming@{camadaEnlace.Hamming}}
+\doxysubsubsection{\texorpdfstring{removeParityBits()}{removeParityBits()}}
+{\footnotesize\ttfamily def camada\+Enlace.\+Hamming.\+remove\+Parity\+Bits (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{message }\end{DoxyParamCaption})}
+
+
+
+Função que remove os bits de paridade de uma string binária. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em bit\+\_\+string} & string binária \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+string binária inserida sem os bits de paridade 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+camada\+Enlace.\+py\end{DoxyCompactItemize}

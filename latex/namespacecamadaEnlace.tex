@@ -1,0 +1,53 @@
+\hypertarget{namespacecamadaEnlace}{}\doxysection{camada\+Enlace Namespace Reference}
+\label{namespacecamadaEnlace}\index{camadaEnlace@{camadaEnlace}}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcamadaEnlace_1_1Hamming}{Hamming}}
+\item 
+class \mbox{\hyperlink{classcamadaEnlace_1_1CRCMachine}{CRCMachine}}
+\item 
+class \mbox{\hyperlink{classcamadaEnlace_1_1CamadaEnlace}{Camada\+Enlace}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespacecamadaEnlace_a8c6240e78bc0f086d70e9df787706185}{decimal\+To\+Binary}} (dec\+\_\+number)
+\item 
+\mbox{\Hypertarget{namespacecamadaEnlace_a53fb8052c252d5edc62e15c0fd4c5633}\label{namespacecamadaEnlace_a53fb8052c252d5edc62e15c0fd4c5633}} 
+def {\bfseries binary\+To\+Decimal} (bin\+\_\+string)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{namespacecamadaEnlace_a793be658e2db568723ff0684836717d4}\label{namespacecamadaEnlace_a793be658e2db568723ff0684836717d4}} 
+{\bfseries camada} = \mbox{\hyperlink{classcamadaEnlace_1_1CamadaEnlace}{Camada\+Enlace}}()
+\item 
+\mbox{\Hypertarget{namespacecamadaEnlace_abc39184969ab0c31e51ccb0fd865aecf}\label{namespacecamadaEnlace_abc39184969ab0c31e51ccb0fd865aecf}} 
+def {\bfseries msg} = camada.\+flag\+\_\+byte\+\_\+insertion + \mbox{\hyperlink{namespacecamadaEnlace_a8c6240e78bc0f086d70e9df787706185}{decimal\+To\+Binary}}(14) + camada.\+flag\+\_\+byte\+\_\+insertion + camada.\+flag\+\_\+byte\+\_\+insertion + \mbox{\hyperlink{namespacecamadaEnlace_a8c6240e78bc0f086d70e9df787706185}{decimal\+To\+Binary}}(128) + camada.\+flag\+\_\+byte\+\_\+insertion
+\item 
+\mbox{\Hypertarget{namespacecamadaEnlace_ae3e94dda496f743e652ff63263a17ac4}\label{namespacecamadaEnlace_ae3e94dda496f743e652ff63263a17ac4}} 
+{\bfseries quadros} = camada.\+separa\+Quadros\+Byte\+Insertion(msg)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}@package docstring
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespacecamadaEnlace_a8c6240e78bc0f086d70e9df787706185}\label{namespacecamadaEnlace_a8c6240e78bc0f086d70e9df787706185}} 
+\index{camadaEnlace@{camadaEnlace}!decimalToBinary@{decimalToBinary}}
+\index{decimalToBinary@{decimalToBinary}!camadaEnlace@{camadaEnlace}}
+\doxysubsubsection{\texorpdfstring{decimalToBinary()}{decimalToBinary()}}
+{\footnotesize\ttfamily def camada\+Enlace.\+decimal\+To\+Binary (\begin{DoxyParamCaption}\item[{}]{dec\+\_\+number }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em numero\+\_\+decimal} & número real \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+binary\+\_\+number o equivalente binário do número decimal, com 8 bits 
+\end{DoxyReturn}
