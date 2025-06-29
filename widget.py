@@ -236,36 +236,47 @@ class MainWidget(QWidget):
 
     def NRZP_clicked(self):
         self.CamadaFisica.setModulacaoDigital("NRZP")
+        print("codificacao trocada para: NRZP")
 
     def Bipolar_clicked(self):
         self.CamadaFisica.setModulacaoDigital("Bipolar")
+        print("codificacao trocada para: bipolar")
         
     def Manchester_clicked(self):
         self.CamadaFisica.setModulacaoDigital("Manchester")
+        print("codificacao trocada para: manchester")
 
     def ASK_clicked(self):
         self.CamadaFisica.setModulacaoAnalogica("ASK")
+        print("modulacao trocada para: ASK")
 
     def FSK_clicked(self):
         self.CamadaFisica.setModulacaoAnalogica("FSK")
+        print("modulacao trocada para: fsk")
 
     def PSK_clicked(self):
         self.CamadaFisica.setModulacaoAnalogica("PSK")
+        print("modulacao trocada para: PSK")
 
     def Contagem_clicked(self):
         self.Enquadramento = "Contagem"
+        print("metodo de contagem de caracteres selecionado")
     
     def ByteInsertion_clicked(self):
         self.Enquadramento = "ByteInsertion"
+        print("metodo de inserçao de bytes selecionado")
 
     def BitInsertion_clicked(self):
         self.Enquadramento = "BitInsertion"
+        print("metodo de inserçao de bits selecionado")
 
     def ParityBit_clicked(self):
         self.ErrorDetection = "ParityBit"
+        print("correçao de erro com bit de paridade")
 
     def CRC_clicked(self):
         self.ErrorDetection = "CRC"
+        print("correcao de erro com crc32")
 
     def Enviar_clicked(self):
         self.listaQuadros = []
@@ -298,10 +309,11 @@ class MainWidget(QWidget):
     def Modulado_clicked(self):
         
         self.GraphMaker.MakeModulatedGraph(self.mensagem_modulada)
+        print(self.CamadaFisica.modulacao_analogica)
         
     def Codificado_clicked(self):
 
         if(self.CamadaFisica.modulacao_digital == "Manchester"):
-            self.GraphMaker.MakeManchesterGraph(self.after_hamming)
+            self.GraphMaker.MakeManchesterGraph(self.after_hamming, 10)
         else:
-            self.GraphMaker.MakeEncodedGraph(self.after_hamming)
+            self.GraphMaker.MakeEncodedGraph(self.after_hamming, 10)

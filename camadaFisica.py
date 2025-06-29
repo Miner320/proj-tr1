@@ -78,11 +78,11 @@ class Modulator():
 
         for bit in bit_string:
             if(bit=='1'):
-                for i in range(0,120):
-                    return_signal.append( amplitude*np.sin(2*np.pi*2*base_frequency*i/120))
+                for i in range(0,100):
+                    return_signal.append( amplitude*np.sin(2*np.pi*2*base_frequency*i/100))
             else:
-                for i in range(0,120):
-                    return_signal.append( amplitude*np.sin(2*np.pi*base_frequency*i/120))
+                for i in range(0,100):
+                    return_signal.append( amplitude*np.sin(2*np.pi*base_frequency*i/100))
 
         return return_signal
     
@@ -92,10 +92,10 @@ class Modulator():
 
         for bit in bit_string:
             if(bit=='1'):
-                for i in range(0,120):
-                    return_signal.append( base_amplitude*np.sin(2*np.pi*frequency*i/120))
+                for i in range(0,100):
+                    return_signal.append( base_amplitude*np.sin(2*np.pi*frequency*i/100))
             else:
-                for i in range(0,120):
+                for i in range(0,100):
                     return_signal.append(0)
 
         return return_signal
@@ -176,7 +176,7 @@ class CamadaFisica():
         """!
         define a modulação analógica (opções válidas: ASK, FSK, PSK)
         """
-        self.modulacao_digital = string
+        self.modulacao_analogica = string
 
     def setAmplitude(self, number):
         """!
