@@ -252,7 +252,7 @@ class MainWidget(QWidget):
 
     def FSK_clicked(self):
         self.CamadaFisica.setModulacaoAnalogica("FSK")
-        print("modulacao trocada para: fsk")
+        print("modulacao trocada para: FSK")
 
     def PSK_clicked(self):
         self.CamadaFisica.setModulacaoAnalogica("PSK")
@@ -276,7 +276,7 @@ class MainWidget(QWidget):
 
     def CRC_clicked(self):
         self.ErrorDetection = "CRC"
-        print("correcao de erro com crc32")
+        print("correçao de erro com crc32")
 
     def Enviar_clicked(self):
         self.listaQuadros = []
