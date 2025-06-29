@@ -107,7 +107,7 @@ class OpcoesEnquadramento(QWidget):
         self.Label = QLabel("Enquadramento:")
         self.Contagem_button = QPushButton("Contagem de caracteres")
         self.Bytes_button = QPushButton("Inserção de bytes")
-        self.Bits_button = QPushButton("Inserção de bites")
+        self.Bits_button = QPushButton("Inserção de bits")
 
         self.Layout.addWidget(self.Label)
         self.Layout.addWidget(self.Contagem_button)
