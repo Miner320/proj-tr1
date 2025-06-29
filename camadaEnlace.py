@@ -235,7 +235,7 @@ class CamadaEnlace():
         self.flag_byte_insertion = "01111110"
         self.escape_flag_byte_insertion = "01111101"
         self.__crc_machine = CRCMachine()
-        self.__hamming_encoder = Hamming()
+        self.hamming_encoder = Hamming()
 
     def messageToBits(self, message):
         """!
@@ -488,9 +488,3 @@ class CamadaEnlace():
 
         return bit_string[0:len(bit_string)-1]
 
-
-
-camada = CamadaEnlace()
-msg = camada.flag_byte_insertion + decimalToBinary(14) + camada.flag_byte_insertion + camada.flag_byte_insertion + decimalToBinary(128) + camada.flag_byte_insertion
-quadros = camada.separaQuadrosByteInsertion(msg)
-print(quadros)

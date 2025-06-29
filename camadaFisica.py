@@ -293,13 +293,3 @@ class GraphMaker():
         ax.plot(x_axis, temp_bits)
         plt.savefig("manchester.jpg")
         return
-
-bitString = "101"
-signal = []
-
-camada = CamadaFisica()
-
-signal = camada.encodeSignal(bitString)
-x_axis = range(0,len(signal))
-plt.plot(x_axis,signal)
-plt.show()
