@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout, QLabel, QLineEdit, QTextEdit
-from camadaFisica import CamadaFisica
+from camadaFisica import CamadaFisica, GraphMaker
 from camadaEnlace import CamadaEnlace
 
 
@@ -146,6 +146,19 @@ class SendButtonLayout(QWidget):
 
         self.setLayout(self.Layout)
 
+class GraphButtonsLayout(QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.Layout = QHBoxLayout()
+        self.BotaoModulacao = QPushButton("Sinal modulado")
+        self.BotaoCodificacao = QPushButton("Sinal codificado")
+
+        self.Layout.addWidget(self.BotaoModulacao)
+        self.Layout.addWidget(self.BotaoCodificacao)
+
+        self.setLayout(self.Layout)
+
 
 
 class MainWidget(QWidget):
@@ -163,6 +176,9 @@ class MainWidget(QWidget):
         self.CamadaFisica = CamadaFisica()
         self.CamadaEnlace = CamadaEnlace()
 
+        # declaraco da classe que faz graficos
+        self.GraphMaker = GraphMaker()
+
         # declaracao de todos os componentes da interface
         self.MessageLayout = MessageLayout()
         self.EncodingOptionsLayout = EncodingOptions()
@@ -174,6 +190,7 @@ class MainWidget(QWidget):
         self.Mensagem_error_detection = MensagemAposErrorDetection()
         self.Mensagem_hamming = MensagemAposHamming()
         self.Botao_enviar = SendButtonLayout()
+        self.Botoes_grafico = GraphButtonsLayout()
 
         # conexao do layout de codificação com suas funções
         self.EncodingOptionsLayout.NRZP_button.clicked.connect(self.NRZP_clicked)
@@ -197,6 +214,10 @@ class MainWidget(QWidget):
         # conexao do layout de envio com suas funções
         self.Botao_enviar.BotaoEnviar.clicked.connect(self.Enviar_clicked)
 
+        # conexao da classe de graficos com suas funções
+        self.Botoes_grafico.BotaoModulacao.clicked.connect(self.Modulado_clicked)
+        self.Botoes_grafico.BotaoCodificacao.clicked.connect(self.Codificado_clicked)
+
 
         v_layout = QVBoxLayout()
         v_layout.addWidget(self.EncodingOptionsLayout)
@@ -209,6 +230,7 @@ class MainWidget(QWidget):
         v_layout.addWidget(self.Mensagem_enquadramento)
         v_layout.addWidget(self.Mensagem_error_detection)
         v_layout.addWidget(self.Mensagem_hamming)
+        v_layout.addWidget(self.Botoes_grafico)
 
         self.setLayout(v_layout)
 
@@ -269,5 +291,17 @@ class MainWidget(QWidget):
         self.after_hamming = self.CamadaEnlace.hamming_encoder.hammingEncode(self.after_error_detection)
 
         self.Mensagem_hamming.Text.setText(self.after_hamming)
+
+        self.mensagem_codificada = self.CamadaFisica.encode(self.after_hamming)
+        self.mensagem_modulada = self.CamadaFisica.modulate(self.after_hamming)
+
+    def Modulado_clicked(self):
         
+        self.GraphMaker.MakeModulatedGraph(self.mensagem_modulada)
         
+    def Codificado_clicked(self):
+
+        if(self.CamadaFisica.modulacao_digital == "Manchester"):
+            self.GraphMaker.MakeManchesterGraph(self.after_hamming)
+        else:
+            self.GraphMaker.MakeEncodedGraph(self.after_hamming)

@@ -12,6 +12,10 @@ def decimalToBinary(dec_number):
     for i in range(0,8):
         result = str(dec_number & 1) + result
         dec_number = dec_number >> 1
+
+    while(len(result)<8):
+        result = '0' + result
+
     return result
 
 def binaryToDecimal(bin_string):
@@ -243,9 +247,12 @@ class CamadaEnlace():
         @param mensagem string de caracteres
         @return string binária equivalente á string de caracteres inserida, seguindo a tabela ASCII
         """
+        result = ""
+        for i in message:
+            value = ord(i)
+            result = result + decimalToBinary(value)
 
-        temp = "".join("0{0:8b}".format(ord(x), 'b')for x in message)
-        return temp.replace(' ', '')
+        return result
     
     def contagemCaracteres(self, bit_string):
         """!
