@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout, QLabel, QLineEdit, QTextEdit
 from camadaFisica import CamadaFisica, GraphMaker
 from camadaEnlace import CamadaEnlace
+import matplotlib.pyplot as plt
 
 
 class MessageLayout(QWidget):
@@ -317,11 +318,16 @@ class MainWidget(QWidget):
     def Modulado_clicked(self):
         
         self.GraphMaker.MakeModulatedGraph(self.mensagem_modulada)
-        print(self.CamadaFisica.modulacao_analogica)
-        
+        plt.imread("modulated.jpg")
+        plt.show()
+
+
     def Codificado_clicked(self):
 
         if(self.CamadaFisica.modulacao_digital == "Manchester"):
             self.GraphMaker.MakeManchesterGraph(self.after_hamming, 10)
         else:
             self.GraphMaker.MakeEncodedGraph(self.after_hamming, 10)
+
+        plt.imread("encoded.jpg")
+        plt.show()
