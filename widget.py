@@ -312,6 +312,8 @@ class MainWidget(QWidget):
         self.mensagem_codificada = self.CamadaFisica.encode(self.after_hamming)
         self.mensagem_modulada = self.CamadaFisica.modulate(self.after_hamming)
 
+        # adicionar aqui logica para enviar mensagem para o socket, importante incluir mecanismo para mudar taxa de erro
+
     def Modulado_clicked(self):
         
         self.GraphMaker.MakeModulatedGraph(self.mensagem_modulada)
