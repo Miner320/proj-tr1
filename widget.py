@@ -279,23 +279,29 @@ class MainWidget(QWidget):
         print("correçao de erro com crc32")
 
     def Enviar_clicked(self):
+
+        self.LimiteTamanhoQuadro = int(self.Botao_enviar.InputTamanhoQuadro.text())
         self.listaQuadros = []
-        self.msg_bits = self.CamadaEnlace.messageToBits(self.MessageLayout.Input.toPlainText())
-        self.Mensagem_em_bytes.Text.setText(self.msg_bits)
+        self.msg = self.MessageLayout.Input.toPlainText()
+        self.Mensagem_em_bytes.Text.setText(self.CamadaEnlace.messageToBits(self.msg))
+        self.listaQuadros = self.CamadaEnlace.sliceMessage(self.msg, self.LimiteTamanhoQuadro)
+        self.listaQuadros = list(map(self.CamadaEnlace.messageToBits,self.listaQuadros))
 
         if(self.Enquadramento == "Contagem"):
-            self.quadro = self.CamadaEnlace.contagemCaracteres(self.msg_bits)
+            self.listaQuadros = list(map(self.CamadaEnlace.contagemCaracteres, self.listaQuadros))
         elif(self.Enquadramento == "ByteInsertion"):
-            self.quadro = self.CamadaEnlace.flagsByteInsertion(self.msg_bits)
+            self.listaQuadros = list(map(self.CamadaEnlace.flag_byte_insertion, self.listaQuadros))
         elif(self.Enquadramento == "BitInsertion"):
-            self.quadro = self.CamadaEnlace.flagsBitInsertion(self.msg_bits)
+            self.listaQuadros = list(map(self.CamadaEnlace.flagsBitInsertion, self.listaQuadros))
 
-        self.Mensagem_enquadramento.Text.setText(self.quadro)
+        self.msg_enquadrada = "".join(self.listaQuadros)
+
+        self.Mensagem_enquadramento.Text.setText(self.msg_enquadrada)
 
         if(self.ErrorDetection == "ParityBit"):
-            self.after_error_detection = self.CamadaEnlace.paridadePar(self.quadro)
+            self.after_error_detection = self.CamadaEnlace.paridadePar(self.msg_enquadrada)
         elif(self.ErrorDetection == "CRC"):
-            self.after_error_detection = self.CamadaEnlace.crc32Encode(self.quadro)
+            self.after_error_detection = self.CamadaEnlace.crc32Encode(self.msg_enquadrada)
 
         self.Mensagem_error_detection.Text.setText(self.after_error_detection)
 

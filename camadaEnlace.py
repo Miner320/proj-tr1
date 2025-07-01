@@ -254,6 +254,15 @@ class CamadaEnlace():
 
         return result
     
+    def sliceMessage(self, string, tamanho):
+        lista_quadros = []
+        while(len(string)):
+            temp = string[0:tamanho]
+            lista_quadros.append(temp)
+            string = string[tamanho:]
+
+        return lista_quadros
+        
     def contagemCaracteres(self, bit_string):
         """!
         Função que adiciona um cabeçalho à uma string de bytes, representando o número de bytes na string
