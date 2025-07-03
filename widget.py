@@ -137,12 +137,16 @@ class SendButtonLayout(QWidget):
         super().__init__()
 
         self.Layout = QHBoxLayout()
-        self.Label = QLabel("Tamanho maximo de quadro")
+        self.Label = QLabel("Tamanho maximo de quadro:")
+        self.LabelErro = QLabel("Probabilidade de erro:")
         self.InputTamanhoQuadro = QLineEdit()
+        self.InputProbErro = QLineEdit()
         self.BotaoEnviar = QPushButton("Enviar mensagem")
 
         self.Layout.addWidget(self.Label)
         self.Layout.addWidget(self.InputTamanhoQuadro)
+        self.Layout.addWidget(self.LabelErro)
+        self.Layout.addWidget(self.InputProbErro)
         self.Layout.addWidget(self.BotaoEnviar)
 
         self.setLayout(self.Layout)
