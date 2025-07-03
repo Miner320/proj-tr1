@@ -1,5 +1,7 @@
 import socket as skt
 from threading import Thread
+import camadaFisica
+import camadaEnlace
 
 class Receptor:
     def __init__(self, host = 'localhost', port = 64000):
@@ -8,6 +10,8 @@ class Receptor:
         @param host: Endereço IP do servidor
         @param port: Porta do servidor
         """
+        self.fisica = camadaFisica.CamadaFisica()
+        self.enlace = camadaEnlace.CamadaEnlace()
         self.host = host
         self.port = port
         self.running = True
@@ -49,3 +53,4 @@ class Receptor:
         if self.server_thread.is_alive():
             self.server_thread.join()
         print('Servidor parado.')
+

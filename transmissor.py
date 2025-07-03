@@ -1,4 +1,7 @@
 import socket as skt
+from camadaFisica import CamadaFisica
+
+
 
 class Transmissor:
     def __init__(self, host, port):
