@@ -27,7 +27,7 @@ class Transmissor:
         Envia uma mensagem para o servidor.
         @param msg: Mensagem a ser enviada
         """
-        self.sock.send(msg.encode('utf-8'))
+        self.sock.sendall(msg.encode('utf-8'))
 
         recvmsg = self.sock.recv(1024)
 
@@ -37,6 +37,7 @@ class Transmissor:
 
 if __name__ == '__main__':
     transmissor = Transmissor('localhost', 64000)
+    transmissor.connect()
     mensagem = "Olá, servidor!"
     print(f"Enviando mensagem: {mensagem}")
     resposta = transmissor.sendmsg(mensagem)

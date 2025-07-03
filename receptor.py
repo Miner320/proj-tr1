@@ -40,6 +40,7 @@ class Receptor:
                     break
                 self.data.append(data.decode('utf-8'))
                 print(f'Mensagem recebida: {self.data[-1]}')
+                conn.send(self.data[-1].encode('utf-8'))  # Envia de volta a última mensagem recebida
             except Exception as e:
                 print(f'Erro ao receber dados: {e}')
             finally:
@@ -54,3 +55,13 @@ class Receptor:
             self.server_thread.join()
         print('Servidor parado.')
 
+if __name__ == '__main__':
+    receptor = Receptor()
+    receptor.start()
+
+    try:
+        while True:
+            pass  # Mantém o receptor ativo
+    except KeyboardInterrupt:
+        receptor.stop()
+        print('Receptor encerrado.')
