@@ -1,7 +1,5 @@
 import socket as skt
 from threading import Thread
-import camadaFisica
-import camadaEnlace
 
 class Receptor:
     def __init__(self, host = 'localhost', port = 64000):
@@ -10,8 +8,6 @@ class Receptor:
         @param host: Endereço IP do servidor
         @param port: Porta do servidor
         """
-        self.fisica = camadaFisica.CamadaFisica()
-        self.enlace = camadaEnlace.CamadaEnlace()
         self.host = host
         self.port = port
         self.running = True
@@ -25,6 +21,17 @@ class Receptor:
         self.server_thread = Thread(target=self._start_server)
         self.server_thread.daemon = True
         self.server_thread.start()
+
+    def send_response(self, conn, message):
+        """!
+        Envia uma resposta ao cliente.
+        @param conn: Conexão com o cliente
+        @param message: Mensagem a ser enviada
+        """
+        try:
+            conn.sendall(message.encode('utf-8'))
+        except Exception as e:
+            print(f'Erro ao enviar resposta: {e}')
 
     def _start_server(self):
         sock = skt.socket(skt.AF_INET, skt.SOCK_STREAM)
@@ -40,7 +47,8 @@ class Receptor:
                     break
                 self.data.append(data.decode('utf-8'))
                 print(f'Mensagem recebida: {self.data[-1]}')
-                conn.send(self.data[-1].encode('utf-8'))  # Envia de volta a última mensagem recebida
+                resp = data.decode('utf-8') + " Cliente: " + addr[0] + ":" + str(addr[1])
+                conn.send(resp.encode('utf-8'))  # Envia de volta a última mensagem recebida
             except Exception as e:
                 print(f'Erro ao receber dados: {e}')
             finally:
