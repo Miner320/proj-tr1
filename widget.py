@@ -1,6 +1,8 @@
 from PySide6.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout, QLabel, QLineEdit, QTextEdit
 from camadaFisica import CamadaFisica, GraphMaker
 from camadaEnlace import CamadaEnlace
+from receptor import Receptor
+from transmissor import Transmissor
 import matplotlib.pyplot as plt
 
 
@@ -164,9 +166,7 @@ class GraphButtonsLayout(QWidget):
 
         self.setLayout(self.Layout)
 
-
-
-class MainWidget(QWidget):
+class MainWidget(QWidget, server_addr = 'localhost', server_port = 64000, client_addr = 'localhost', client_port = 64001):
 
     def __init__(self):
         super().__init__()
@@ -183,6 +183,11 @@ class MainWidget(QWidget):
 
         # declaraco da classe que faz graficos
         self.GraphMaker = GraphMaker()
+
+        # declaracao das classes de conexao
+        self.receptor = Receptor(server_addr,server_port)
+        self.transmissor = Transmissor()
+        transmissor.connect(client_addr, client_port)
 
         # declaracao de todos os componentes da interface
         self.MessageLayout = MessageLayout()
@@ -318,6 +323,7 @@ class MainWidget(QWidget):
         self.mensagem_modulada = self.CamadaFisica.modulate(self.after_hamming)
 
         # adicionar aqui logica para enviar mensagem para o socket, importante incluir mecanismo para mudar taxa de erro
+        self.tranmissor.sendmsg(self.mensagem_codificada, int(self.Botao_enviar.InputProbErro.text()))
 
     def Modulado_clicked(self):
         
