@@ -1,7 +1,7 @@
 from PySide6.QtWidgets import QApplication
-from widget import MainWidget
+from widget import InterfaceTransmissao
 
 app = QApplication()
-window = MainWidget()
+window = InterfaceTransmissao()
 window.show()
 app.exec()

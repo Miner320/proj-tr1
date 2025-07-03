@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout, QLabel, QLineEdit, QTextEdit
 from camadaFisica import CamadaFisica, GraphMaker
 from camadaEnlace import CamadaEnlace
+from transmissor import Transmissor
 import matplotlib.pyplot as plt
 
 
@@ -166,11 +167,15 @@ class GraphButtonsLayout(QWidget):
 
 
 
-class MainWidget(QWidget):
+class InterfaceTransmissao(QWidget):
 
     def __init__(self):
         super().__init__()
         self.setWindowTitle("interface de transmissão")
+
+        # inicialização do socket
+        #self.SocketTransmissor = Transmissor()
+        #self.SocketTransmissor.connect() conectar ao servidor nessa linha
 
         # opções iniciais de enquadramento e detecção de erro
         self.Enquadramento = "Contagem"
@@ -284,6 +289,8 @@ class MainWidget(QWidget):
         print("correçao de erro com crc32")
 
     def Enviar_clicked(self):
+
+        self.ProbDeErro = float(self.Botao_enviar.InputProbErro.text())
 
         self.LimiteTamanhoQuadro = int(self.Botao_enviar.InputTamanhoQuadro.text())
         self.listaQuadros = []
