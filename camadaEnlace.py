@@ -12,6 +12,10 @@ def decimalToBinary(dec_number):
     for i in range(0,8):
         result = str(dec_number & 1) + result
         dec_number = dec_number >> 1
+
+    while(len(result)<8):
+        result = '0' + result
+
     return result
 
 def binaryToDecimal(bin_string):
@@ -235,7 +239,7 @@ class CamadaEnlace():
         self.flag_byte_insertion = "01111110"
         self.escape_flag_byte_insertion = "01111101"
         self.__crc_machine = CRCMachine()
-        self.__hamming_encoder = Hamming()
+        self.hamming_encoder = Hamming()
 
     def messageToBits(self, message):
         """!
@@ -243,10 +247,22 @@ class CamadaEnlace():
         @param mensagem string de caracteres
         @return string binária equivalente á string de caracteres inserida, seguindo a tabela ASCII
         """
+        result = ""
+        for i in message:
+            value = ord(i)
+            result = result + decimalToBinary(value)
 
-        temp = "".join("0{0:8b}".format(ord(x), 'b')for x in message)
-        return temp.replace(' ', '')
+        return result
     
+    def sliceMessage(self, string, tamanho):
+        lista_quadros = []
+        while(len(string)):
+            temp = string[0:tamanho]
+            lista_quadros.append(temp)
+            string = string[tamanho:]
+
+        return lista_quadros
+        
     def contagemCaracteres(self, bit_string):
         """!
         Função que adiciona um cabeçalho à uma string de bytes, representando o número de bytes na string
@@ -488,9 +504,3 @@ class CamadaEnlace():
 
         return bit_string[0:len(bit_string)-1]
 
-
-
-camada = CamadaEnlace()
-msg = camada.flag_byte_insertion + decimalToBinary(14) + camada.flag_byte_insertion + camada.flag_byte_insertion + decimalToBinary(128) + camada.flag_byte_insertion
-quadros = camada.separaQuadrosByteInsertion(msg)
-print(quadros)
