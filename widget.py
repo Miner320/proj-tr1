@@ -193,6 +193,8 @@ class MainWidget(QWidget):
         super().__init__()
         self.setWindowTitle("interface de transmissão")
 
+        self.mensagem_enviada_ou_recebida = ""
+
         # opções iniciais de enquadramento e detecção de erro
         self.Enquadramento = "Contagem"
         self.ErrorDetection = "ParityBit"
