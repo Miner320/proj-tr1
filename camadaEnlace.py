@@ -224,7 +224,7 @@ class CRCMachine():
         
     def removeCrc(self, message):
         """!
-        Função que de uma string o resto da divisão pelo polinômio crc
+        Função que retira de uma string o resto da divisão pelo polinômio crc
         @param message string binária
         @return string inserida sem o resto da divisão pelo polinômio
         """

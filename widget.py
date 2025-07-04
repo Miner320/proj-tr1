@@ -143,13 +143,15 @@ class SendButtonLayout(QWidget):
         self.LabelErro = QLabel("Probabilidade de erro:")
         self.InputTamanhoQuadro = QLineEdit()
         self.InputProbErro = QLineEdit()
-        self.BotaoEnviar = QPushButton("Enviar mensagem")
+        self.BotaoEnviar = QPushButton("Enviar")
+        self.BotaoReceber = QPushButton("Receber")
 
         self.Layout.addWidget(self.Label)
         self.Layout.addWidget(self.InputTamanhoQuadro)
         self.Layout.addWidget(self.LabelErro)
         self.Layout.addWidget(self.InputProbErro)
         self.Layout.addWidget(self.BotaoEnviar)
+        self.Layout.addWidget(self.BotaoReceber)
 
         self.setLayout(self.Layout)
 
@@ -166,9 +168,9 @@ class GraphButtonsLayout(QWidget):
 
         self.setLayout(self.Layout)
 
-class MainWidget(QWidget, server_addr = 'localhost', server_port = 64000, client_addr = 'localhost', client_port = 64001):
+class MainWidget(QWidget):
 
-    def __init__(self):
+    def __init__(self, server_addr = 'localhost', server_port = 64000, client_addr = 'localhost', client_port = 64001):
         super().__init__()
         self.setWindowTitle("interface de transmissão")
 
@@ -185,9 +187,9 @@ class MainWidget(QWidget, server_addr = 'localhost', server_port = 64000, client
         self.GraphMaker = GraphMaker()
 
         # declaracao das classes de conexao
-        self.receptor = Receptor(server_addr,server_port)
+        #self.receptor = Receptor(server_addr,server_port)
         self.transmissor = Transmissor()
-        transmissor.connect(client_addr, client_port)
+        #self.transmissor.connect(client_addr, client_port)
 
         # declaracao de todos os componentes da interface
         self.MessageLayout = MessageLayout()
