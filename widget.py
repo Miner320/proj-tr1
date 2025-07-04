@@ -193,6 +193,8 @@ class MainWidget(QWidget):
         super().__init__()
         self.setWindowTitle("interface de transmissão")
 
+        self.mensagem_enviada_ou_recebida = ""
+
         # opções iniciais de enquadramento e detecção de erro
         self.Enquadramento = "Contagem"
         self.ErrorDetection = "ParityBit"
@@ -341,6 +343,8 @@ class MainWidget(QWidget):
         self.after_hamming = self.CamadaEnlace.hamming_encoder.hammingEncode(self.after_error_detection)
 
         self.Mensagem_hamming.Text.setText(self.after_hamming)
+
+        self.mensagem_enviada_ou_recebida = self.after_hamming
 
         self.mensagem_codificada = self.CamadaFisica.encode(self.after_hamming)
         self.mensagem_modulada = self.CamadaFisica.modulate(self.after_hamming)
