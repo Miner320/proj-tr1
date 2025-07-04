@@ -5,6 +5,25 @@ from receptor import Receptor
 from transmissor import Transmissor
 import matplotlib.pyplot as plt
 
+def insertError(msg, probabilidadeErro):
+    """
+    Insere erros na mensagem com base na probabilidade fornecida.
+    @param msg: Mensagem original
+    @param probabilidadeErro: Probabilidade de erro (0 a 1)
+    @return: Mensagem com erros inseridos
+    """
+    import random
+    erro_msg = []
+    for bit in msg:
+        if random.random() < probabilidadeErro:
+            if bit == 1:
+                erro_msg.append(-1)
+            else:
+                erro_msg.append(1)
+        else:
+            erro_msg.append(bit)
+
+    return erro_msg
 
 class MessageLayout(QWidget):
 
@@ -187,9 +206,9 @@ class MainWidget(QWidget):
         self.GraphMaker = GraphMaker()
 
         # declaracao das classes de conexao
-        #self.receptor = Receptor(server_addr,server_port)
+        self.receptor = Receptor(server_addr,server_port)
+        self.receptor.start()
         self.transmissor = Transmissor()
-        #self.transmissor.connect(client_addr, client_port)
 
         # declaracao de todos os componentes da interface
         self.MessageLayout = MessageLayout()
@@ -292,6 +311,7 @@ class MainWidget(QWidget):
 
     def Enviar_clicked(self):
 
+        self.transmissor.connect(self.receptor.host, self.receptor.port)
         self.LimiteTamanhoQuadro = int(self.Botao_enviar.InputTamanhoQuadro.text())
         self.listaQuadros = []
         self.msg = self.MessageLayout.Input.toPlainText()
@@ -325,7 +345,18 @@ class MainWidget(QWidget):
         self.mensagem_modulada = self.CamadaFisica.modulate(self.after_hamming)
 
         # adicionar aqui logica para enviar mensagem para o socket, importante incluir mecanismo para mudar taxa de erro
-        self.tranmissor.sendmsg(self.mensagem_codificada, int(self.Botao_enviar.InputProbErro.text()))
+        if (self.Botao_enviar.InputProbErro.text() != '' and self.Botao_enviar.InputProbErro.text() != '0'):
+            probabilidadeErro = float(self.Botao_enviar.InputProbErro.text())
+            msg_codificada_com_erro = insertError(self.mensagem_codificada, probabilidadeErro)
+            print(''.join(str(msg_codificada_com_erro)) == ''.join(str(self.mensagem_codificada)))
+            self.transmissor.sendmsg(''.join(str(msg_codificada_com_erro)).encode('utf-8'))
+        else:
+            self.transmissor.sendmsg(''.join(str(self.mensagem_codificada)).encode('utf-8'))
+            #print(self.mensagem_modulada)
+            #self.transmissor.sendmsg(self.mensagem_modulada, True)
+
+        self.transmissor.desconnect()
+
 
     def Modulado_clicked(self):
         

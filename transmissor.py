@@ -9,24 +9,6 @@ class Transmissor:
         """
         self.sock = None
 
-    def error_insert(self,msg, qtd_erros):
-        """!
-        Insere um erro na mensagem.
-        @param bytes: quantidade de bytes a serem alterados
-        @return: Mensagem com erro inserido
-        """
-        # Insere um erro aleatório na mensagem
-        import random
-        if qtd_erros > 0:
-            for i in range(qtd_erros):
-                msg_com_erro = msg
-                index = random.randint(0, len(msg) - 1)
-                msg_com_erro = msg_com_erro[index] ^ 0xFF
-        else:
-            msg_com_erro = msg
-
-        return msg_com_erro
-
     def connect(self, server_address, server_port):
         """!
         Conecta ao servidor.
@@ -35,21 +17,37 @@ class Transmissor:
         self.sock = skt.socket(skt.AF_INET, skt.SOCK_STREAM)
         self.sock.connect((server_address, server_port))
 
-    def sendmsg(self,msg, qtd_erros=0):
+    def sendmsg(self,msg,is_signal=False):
         """!
         Envia uma mensagem para o servidor.
         @param msg: Mensagem a ser enviada
         """
-        if qtd_erros > 0:
-            msg = self.error_insert(msg, qtd_erros)
-
-        self.sock.sendall(msg)
+        if is_signal:
+            msg_traduzida = ''
+            for term in msg:
+                print(term)
+                msg_traduzida += str(term) + ' '
+            self.sock.sendall(msg_traduzida.encode('utf-8'))
+        else:
+            self.sock.sendall(msg)
 
         recvmsg = self.sock.recv(1024)
 
-        self.sock.close()
+        if recvmsg != b'':
+            recvmsg = "Sucesso!".encode('utf-8')
 
         return recvmsg.decode('utf-8')
+
+    def desconnect(self):
+        """!
+        Desconecta do servidor.
+        """
+        if self.sock:
+            self.sock.shutdown(skt.SHUT_RDWR)
+            self.sock.close()
+            self.sock = None
+        else:
+            print("Nenhuma conexão ativa para desconectar.")
 
 if __name__ == '__main__':
     transmissor = Transmissor()
