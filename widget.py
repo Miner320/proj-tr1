@@ -13,15 +13,15 @@ def insertError(msg, probabilidadeErro):
     @return: Mensagem com erros inseridos
     """
     import random
-    erro_msg = []
+    erro_msg = ""
     for bit in msg:
         if random.random() < probabilidadeErro:
-            if bit == 1:
-                erro_msg.append(-1)
+            if bit == '1':
+                erro_msg += '0'
             else:
-                erro_msg.append(1)
+                erro_msg += '1'
         else:
-            erro_msg.append(bit)
+            erro_msg += bit
 
     return erro_msg
 
@@ -348,11 +348,12 @@ class MainWidget(QWidget):
         # adicionar aqui logica para enviar mensagem para o socket, importante incluir mecanismo para mudar taxa de erro
         if (self.Botao_enviar.InputProbErro.text() != '' and self.Botao_enviar.InputProbErro.text() != '0'):
             probabilidadeErro = float(self.Botao_enviar.InputProbErro.text())
-            msg_codificada_com_erro = insertError(self.mensagem_codificada, probabilidadeErro)
-            print(''.join(str(msg_codificada_com_erro)) == ''.join(str(self.mensagem_codificada)))
-            self.transmissor.sendmsg(''.join(str(msg_codificada_com_erro)).encode('utf-8'))
+            msg_codificada_com_erro = insertError(self.after_hamming, probabilidadeErro)
+            if self.after_hamming != msg_codificada_com_erro:
+                print("Mensagem com erro inserido")
+            self.transmissor.sendmsg(msg_codificada_com_erro.encode('utf-8'))
         else:
-            self.transmissor.sendmsg(''.join(str(self.mensagem_codificada)).encode('utf-8'))
+            self.transmissor.sendmsg(self.after_hamming.encode('utf-8'))
             #print(self.mensagem_modulada)
             #self.transmissor.sendmsg(self.mensagem_modulada, True)
 
