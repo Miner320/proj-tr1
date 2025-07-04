@@ -342,6 +342,8 @@ class MainWidget(QWidget):
 
         self.Mensagem_hamming.Text.setText(self.after_hamming)
 
+        self.mensagem_enviada_ou_recebida = self.after_hamming
+
         self.mensagem_codificada = self.CamadaFisica.encode(self.after_hamming)
         self.mensagem_modulada = self.CamadaFisica.modulate(self.after_hamming)
 

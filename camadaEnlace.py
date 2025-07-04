@@ -128,7 +128,7 @@ class Hamming():
         """!
         Função que faz detecção de erros por codificação Hamming
         @param string string binária que passará por detecção de erros
-        @return posição do bit em que ocorreu o erro, retorna 0 caso não haja erro
+        @return posição do bit em que ocorreu o erro, retorna 0 caso não haja erro, lança uma exceção caso 2 bits errados sejam detectados
         """
         num_of_1s = bit_string.count('1')
         parity_bit = bit_string[-1] # parity_bit = ultimo bit de paridade da string
