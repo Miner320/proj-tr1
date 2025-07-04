@@ -210,7 +210,7 @@ class MainWidget(QWidget):
         # declaracao das classes de conexao
         self.receptor = Receptor(server_addr,server_port)
         self.receptor.start()
-        self.transmissor = Transmissor()
+        self.transmissor = Transmissor(client_addr, client_port)
 
         # declaracao de todos os componentes da interface
         self.MessageLayout = MessageLayout()
@@ -312,9 +312,7 @@ class MainWidget(QWidget):
         print("correçao de erro com crc32")
 
     def Enviar_clicked(self):
-
-        #Precisa alterar host e port para os valores do receptor da segunda janela quando implementar essa parte
-        self.transmissor.connect(self.receptor.host, self.receptor.port)
+        self.transmissor.connect(self.transmissor.host, self.transmissor.port)
         self.LimiteTamanhoQuadro = int(self.Botao_enviar.InputTamanhoQuadro.text())
         self.listaQuadros = []
         self.msg = self.MessageLayout.Input.toPlainText()
@@ -355,9 +353,11 @@ class MainWidget(QWidget):
             msg_codificada_com_erro = insertError(self.after_hamming, probabilidadeErro)
             if self.after_hamming != msg_codificada_com_erro:
                 print("Mensagem com erro inserido")
-            self.transmissor.sendmsg(msg_codificada_com_erro.encode('utf-8'))
+            self.mensagem_enviada_ou_recebida = self.transmissor.sendmsg(msg_codificada_com_erro.encode('utf-8'))
+            print('Mensagem recebida:', self.mensagem_enviada_ou_recebida)
         else:
-            self.transmissor.sendmsg(self.after_hamming.encode('utf-8'))
+            self.mensagem_enviada_ou_recebida = self.transmissor.sendmsg(self.after_hamming.encode('utf-8'))
+            print('Mensagem recebida:', self.mensagem_enviada_ou_recebida)
             #print(self.mensagem_modulada)
             #self.transmissor.sendmsg(self.mensagem_modulada, True)
 

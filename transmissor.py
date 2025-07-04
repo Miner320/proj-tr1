@@ -1,12 +1,14 @@
 import socket as skt
 
 class Transmissor:
-    def __init__(self):
+    def __init__(self, server_address='localhost', server_port=64000):
         """!
         Inicializa o transmissor com o endereço do servidor.
         @param host: Endereço IP do servidor
         @param port: Porta do servidor
         """
+        self.host = server_address
+        self.port = server_port
         self.sock = None
 
     def connect(self, server_address, server_port):
@@ -14,6 +16,9 @@ class Transmissor:
         Conecta ao servidor.
         @return: Objeto socket conectado ao servidor
         """
+        if not isinstance(server_port, int):
+            server_port = int(server_port)
+
         self.sock = skt.socket(skt.AF_INET, skt.SOCK_STREAM)
         self.sock.connect((server_address, server_port))
 
@@ -32,9 +37,6 @@ class Transmissor:
             self.sock.sendall(msg)
 
         recvmsg = self.sock.recv(1024)
-
-        if recvmsg != b'':
-            recvmsg = "Sucesso!".encode('utf-8')
 
         return recvmsg.decode('utf-8')
 

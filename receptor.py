@@ -8,6 +8,9 @@ class Receptor:
         @param host: Endereço IP do servidor
         @param port: Porta do servidor
         """
+        if not isinstance(port, int):
+            port = int(port)
+
         self.host = host
         self.port = port
         self.running = True
