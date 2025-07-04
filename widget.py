@@ -192,7 +192,6 @@ class MainWidget(QWidget):
     def __init__(self, server_addr = 'localhost', server_port = 64000, client_addr = 'localhost', client_port = 64001):
         super().__init__()
         self.setWindowTitle("interface de transmissão")
-
         self.mensagem_enviada_ou_recebida = ""
 
         # opções iniciais de enquadramento e detecção de erro
@@ -208,7 +207,7 @@ class MainWidget(QWidget):
         self.GraphMaker = GraphMaker()
 
         # declaracao das classes de conexao
-        self.receptor = Receptor(server_addr,server_port)
+        self.receptor = Receptor(server_addr,server_port,on_data_received=self.mensagem_recebida)
         self.receptor.start()
         self.transmissor = Transmissor(client_addr, client_port)
 
@@ -362,6 +361,13 @@ class MainWidget(QWidget):
             #self.transmissor.sendmsg(self.mensagem_modulada, True)
 
         self.transmissor.desconnect()
+
+    def mensagem_recebida(self,mensagem):
+        """
+        Recebe a mensagem do receptor e atualiza os campos de texto correspondentes.
+        @param mensagem: Mensagem recebida do receptor
+        """
+        self.mensagem_enviada_ou_recebida = mensagem
 
 
     def Modulado_clicked(self):

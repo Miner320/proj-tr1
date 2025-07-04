@@ -2,7 +2,7 @@ import socket as skt
 from threading import Thread
 
 class Receptor:
-    def __init__(self, host = 'localhost', port = 64000):
+    def __init__(self, host = 'localhost', port = 64000, on_data_received=None):
         """!
         Inicializa o receptor com o endereço do servidor.
         @param host: Endereço IP do servidor
@@ -16,6 +16,7 @@ class Receptor:
         self.running = True
         self.data = []
         self.server_thread: Thread
+        self.on_data_received = on_data_received  # Callback para quando dados forem recebidos
 
     def start(self):
         """!
@@ -50,6 +51,8 @@ class Receptor:
                     break
                 self.data.append(data.decode('utf-8'))
                 print(f'Mensagem recebida: {self.data[-1]}')
+                if self.on_data_received:
+                    self.on_data_received(data.decode('utf-8'), addr)
                 resp = data.decode('utf-8') + " Cliente: " + addr[0] + ":" + str(addr[1])
                 conn.send(resp.encode('utf-8'))  # Envia de volta a última mensagem recebida
             except Exception as e:
