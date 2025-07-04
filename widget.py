@@ -311,6 +311,7 @@ class MainWidget(QWidget):
 
     def Enviar_clicked(self):
 
+        #Precisa alterar host e port para os valores do receptor da segunda janela quando implementar essa parte
         self.transmissor.connect(self.receptor.host, self.receptor.port)
         self.LimiteTamanhoQuadro = int(self.Botao_enviar.InputTamanhoQuadro.text())
         self.listaQuadros = []
