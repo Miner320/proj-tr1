@@ -72,6 +72,7 @@ class Hamming():
         @return string binária inserida sem os bits de paridade
         """
 
+        message = message[:-1] # remove o ultimo bit de paridade, pois ele não fica em potencia de 2
         result_string = ""
         posicao = 1
 
@@ -114,6 +115,13 @@ class Hamming():
         while(bit_string.count('-') > 0):
             bit_string = bit_string.replace('-', self.__calcNthParityBit(bit_string),1)
 
+        num_of_1s = bit_string.count('1')
+
+        if(num_of_1s & 1):
+            bit_string = bit_string + '1'
+        else:
+            bit_string = bit_string + '0'
+
         return bit_string
 
     def detectError(self, bit_string): #caso retorne 0 não houve erro, retorna a posição do erro caso contrário(começando contagem do array a partir de 1)
@@ -122,7 +130,9 @@ class Hamming():
         @param string string binária que passará por detecção de erros
         @return posição do bit em que ocorreu o erro, retorna 0 caso não haja erro
         """
-
+        num_of_1s = bit_string.count('1')
+        parity_bit = bit_string[-1] # parity_bit = ultimo bit de paridade da string
+        bit_string = bit_string[:-1] # retira o bit de paridade da string
         new_parity_bits= list()
         potencia = 1
         while(potencia < len(bit_string)):
@@ -142,6 +152,25 @@ class Hamming():
             if(i=='1'):
                 posicao_erro = posicao_erro + potencia
             potencia = potencia*2
+
+        if( (num_of_1s & 1) == 0 ):
+            parity_is_even = True
+        else:
+            parity_is_even = False
+
+        if(parity_is_even):
+            if(posicao_erro == 0):
+                return 0
+            else:
+                raise Exception("erro de 2 bits detectado no hamming")
+
+        else:
+            if(posicao_erro != 0):
+                return posicao_erro
+            else:
+                return len(bit_string)+1
+
+
 
         return posicao_erro
             
