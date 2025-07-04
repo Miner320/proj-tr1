@@ -52,7 +52,7 @@ class Receptor:
                 self.data.append(data.decode('utf-8'))
                 print(f'Mensagem recebida: {self.data[-1]}')
                 if self.on_data_received:
-                    self.on_data_received(data.decode('utf-8'), addr)
+                    self.on_data_received(data.decode('utf-8'))
                 resp = data.decode('utf-8') + " Cliente: " + addr[0] + ":" + str(addr[1])
                 conn.send(resp.encode('utf-8'))  # Envia de volta a última mensagem recebida
             except Exception as e:
