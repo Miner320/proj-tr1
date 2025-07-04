@@ -357,8 +357,6 @@ class MainWidget(QWidget):
         else:
             self.mensagem_enviada_ou_recebida = self.transmissor.sendmsg(self.after_hamming.encode('utf-8'))
             print('Mensagem recebida:', self.mensagem_enviada_ou_recebida)
-            #print(self.mensagem_modulada)
-            #self.transmissor.sendmsg(self.mensagem_modulada, True)
 
         self.transmissor.desconnect()
 
