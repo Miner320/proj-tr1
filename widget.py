@@ -360,6 +360,30 @@ class MainWidget(QWidget):
 
         self.transmissor.desconnect()
 
+    def Receber_clicked(self):
+
+        #self.mensagem_enviada_ou_recebida = atribuir aqui a mensagem vinda do socket
+
+        try:
+            self.verificacaoHamming = self.CamadaEnlace.hamming_encoder.detectError(self.mensagem_enviada_ou_recebida)
+            if(self.verificacaoHamming != 0):
+                self.posicaoErro = self.verificacaoHamming - 1
+                self.after_hamming = ""
+                for i in range(0, len(self.mensagem_enviada_ou_recebida)):
+                    if( i == self.posicaoErro ):
+                        if(self.mensagem_enviada_ou_recebida == '0'):
+                            self.after_hamming = self.after_hamming + '1'
+                        else:
+                            self.after_hamming = self.after_hamming + '0'
+                    else:
+                        self.after_hamming = self.after_hamming + self.mensagem_enviada_ou_recebida[i]
+            self.after_hamming = self.CamadaEnlace.hamming_encoder.removeParityBits(self.after_hamming)
+            self.Mensagem_hamming.Text.setText(self.after_hamming)
+
+        except: # quando são detectados 2 bits errados, caímos nessa exceção, não é possível determinar a posição dos erros nem fazer sua correção
+            self.after_hamming = self.CamadaEnlace.hamming_encoder.removeParityBits(self.mensagem_enviada_ou_recebida)
+            self.Mensagem_hamming.Text.setText("Foram detectados 2 bits errados com a codificação Hamming, correção impossível")
+ 
     def mensagem_recebida(self,mensagem):
         """
         Recebe a mensagem do receptor e atualiza os campos de texto correspondentes.
