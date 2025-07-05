@@ -245,6 +245,7 @@ class MainWidget(QWidget):
 
         # conexao do layout de envio com suas funções
         self.Botao_enviar.BotaoEnviar.clicked.connect(self.Enviar_clicked)
+        self.Botao_enviar.BotaoReceber.clicked.connect(self.Receber_clicked)
 
         # conexao da classe de graficos com suas funções
         self.Botoes_grafico.BotaoModulacao.clicked.connect(self.Modulado_clicked)
@@ -364,7 +365,7 @@ class MainWidget(QWidget):
 
         #self.mensagem_enviada_ou_recebida = atribuir aqui a mensagem vinda do socket
 
-        try:
+        try: # aqui tentamos detectar e corrigir erro de apenas 1 bit
             self.verificacaoHamming = self.CamadaEnlace.hamming_encoder.detectError(self.mensagem_enviada_ou_recebida)
             if(self.verificacaoHamming != 0):
                 self.posicaoErro = self.verificacaoHamming - 1
