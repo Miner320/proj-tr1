@@ -203,11 +203,7 @@ class CRCMachine():
         """!
         Esta função faz uma operação XOR entre 2 strings binárias, com exceção do bit mais significativo
         """
-
-        if(len(x)<len(y)):
-            limit = len(x)
-        else:
-            limit = len(y)
+        limit = len(y)
         
         result = ""
         for i in range(1, limit):
@@ -224,23 +220,26 @@ class CRCMachine():
         \retval remainder: resto da divisão de bit_string pelo polinômio crc
         """
 
-        limit = len(message)
-        slice = len(self.polynomial)
-        temp = message[0:slice]
+        limit = len(self.polynomial)
+        tmp = message[0:limit]
 
-        while(slice<limit):
-            if(temp[0]=='1'):
-                temp = self.__crcXor(temp, self.polynomial)
+        while limit < len(message):
+
+            if tmp[0] == '1':
+                tmp = self.__crcXor(self.polynomial, tmp) + message[limit]
+
             else:
-                temp = self.__crcXor("".zfill(slice), temp)
-            temp = temp + message[slice]
-            slice = slice + 1
+                tmp = self.__crcXor("".zfill(limit), tmp) + message[limit]
 
-        if(temp[0]=='1'):   
-            temp = self.__crcXor(message, temp)
+            limit = limit + 1
+
+        if tmp[0] == '1':
+            tmp = self.__crcXor(self.polynomial, tmp)
         else:
-            temp = self.__crcXor("".zfill(slice), temp)
-        return temp
+            tmp = self.__crcXor("".zfill(limit), tmp)
+
+        return tmp
+
             
     def crcRemainder(self, message):
         """!
@@ -249,7 +248,7 @@ class CRCMachine():
         \retval remainder: resto da divisão da string modificada pelo polinômio crc
         """
         
-        temp = message+"".zfill(len(self.polynomial)-1)
+        temp = message+"0"*(len(self.polynomial)-1)
         remainder = self.crcDivision(temp)
         return remainder
 
@@ -507,7 +506,7 @@ class CamadaEnlace():
         @return string binária com o resto da divisão pelo polinômio crc concatenado à direita
         """
 
-        remainder = self.__crc_machine.crcEncode(message)
+        remainder = self.__crc_machine.crcRemainder(message)
         return message+remainder
     
     def crc32Verify(self, message):

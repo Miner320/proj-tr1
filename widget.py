@@ -323,7 +323,7 @@ class MainWidget(QWidget):
         if(self.Enquadramento == "Contagem"):
             self.listaQuadros = list(map(self.CamadaEnlace.contagemCaracteres, self.listaQuadros))
         elif(self.Enquadramento == "ByteInsertion"):
-            self.listaQuadros = list(map(self.CamadaEnlace.flag_byte_insertion, self.listaQuadros))
+            self.listaQuadros = list(map(self.CamadaEnlace.flagsByteInsertion, self.listaQuadros))
         elif(self.Enquadramento == "BitInsertion"):
             self.listaQuadros = list(map(self.CamadaEnlace.flagsBitInsertion, self.listaQuadros))
 
@@ -402,6 +402,8 @@ class MainWidget(QWidget):
 
         self.ErroDeEnquadramento = False
         #aqui estao os protocolos pra desenquadrar a mensagem
+        print("apos deteccao de erro")
+        print(self.after_error_detection)
 
         if(self.Enquadramento == "Contagem"):
             try:
