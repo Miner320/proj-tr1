@@ -191,7 +191,7 @@ class MainWidget(QWidget):
 
     def __init__(self, server_addr = 'localhost', server_port = 64000, client_addr = 'localhost', client_port = 64001):
         super().__init__()
-        self.setWindowTitle("interface de transmissão")
+        self.setWindowTitle("MarottaSim v1.5")
         self.mensagem_enviada_ou_recebida = ""
 
         # opções iniciais de enquadramento e detecção de erro
@@ -444,6 +444,7 @@ class MainWidget(QWidget):
         @param mensagem: Mensagem recebida do receptor
         """
         self.mensagem_enviada_ou_recebida = mensagem
+        return
 
 
     def Modulado_clicked(self):
