@@ -187,6 +187,55 @@ class GraphButtonsLayout(QWidget):
 
         self.setLayout(self.Layout)
 
+
+class MensagemSemHamming(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.Layout = QHBoxLayout()
+        self.Label = QLabel("Mensagem sem Hamming:")
+        self.Text = QTextEdit()
+
+        self.Layout.addWidget(self.Label)
+        self.Layout.addWidget(self.Text)
+
+        self.setLayout(self.Layout)
+
+class MensagemSemErrorDetection(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.Layout = QHBoxLayout()
+        self.Label = QLabel("Mensagem sem detecção de erro:")
+        self.Text = QTextEdit()
+
+        self.Layout.addWidget(self.Label)
+        self.Layout.addWidget(self.Text)
+
+        self.setLayout(self.Layout)
+
+class MensagemSemEnquadramento(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.Layout = QHBoxLayout()
+        self.Label = QLabel("Mensagem desenquadrada:")
+        self.Text = QTextEdit()
+
+        self.Layout.addWidget(self.Label)
+        self.Layout.addWidget(self.Text)
+
+        self.setLayout(self.Layout)
+
+class MensagemFinal(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.Layout = QHBoxLayout()
+        self.Label = QLabel("Mensagem final:")
+        self.Text = QTextEdit()
+
+        self.Layout.addWidget(self.Label)
+        self.Layout.addWidget(self.Text)
+
+        self.setLayout(self.Layout)
+
 class MainWidget(QWidget):
 
     def __init__(self, server_addr = 'localhost', server_port = 64000, client_addr = 'localhost', client_port = 64001):
@@ -223,6 +272,10 @@ class MainWidget(QWidget):
         self.Mensagem_hamming = MensagemAposHamming()
         self.Botao_enviar = SendButtonLayout()
         self.Botoes_grafico = GraphButtonsLayout()
+        self.Mensagem_hamming_revertido = MensagemSemHamming()
+        self.Mensagem_sem_error_detection = MensagemSemErrorDetection()
+        self.Mensagem_desenquadrada = MensagemSemEnquadramento()
+        self.Final_mensagem = MensagemFinal()
 
         # conexao do layout de codificação com suas funções
         self.EncodingOptionsLayout.NRZP_button.clicked.connect(self.NRZP_clicked)
@@ -264,6 +317,10 @@ class MainWidget(QWidget):
         v_layout.addWidget(self.Mensagem_error_detection)
         v_layout.addWidget(self.Mensagem_hamming)
         v_layout.addWidget(self.Botoes_grafico)
+        v_layout.addWidget(self.Mensagem_hamming_revertido)
+        v_layout.addWidget(self.Mensagem_sem_error_detection)
+        v_layout.addWidget(self.Mensagem_desenquadrada)
+        v_layout.addWidget(self.Final_mensagem)
 
         self.setLayout(v_layout)
 
@@ -363,7 +420,10 @@ class MainWidget(QWidget):
 
     def Receber_clicked(self):
 
-        #self.mensagem_enviada_ou_recebida = atribuir aqui a mensagem vinda do socket
+        self.listaQuadros2 = []
+
+        #self.mensagem_enviada_ou_recebida = atribuir aqui a mensagem vinda do socket 
+        self.mensagem_enviada_ou_recebida =  self.mensagem_recebida   
 
         try: # aqui tentamos detectar e corrigir erro de apenas 1 bit
             self.verificacaoHamming = self.CamadaEnlace.hamming_encoder.detectError(self.mensagem_enviada_ou_recebida)
@@ -372,7 +432,7 @@ class MainWidget(QWidget):
                 self.after_hamming = ""
                 for i in range(0, len(self.mensagem_enviada_ou_recebida)):
                     if( i == self.posicaoErro ):
-                        if(self.mensagem_enviada_ou_recebida == '0'):
+                        if(self.mensagem_enviada_ou_recebida[i] == '0'):
                             self.after_hamming = self.after_hamming + '1'
                         else:
                             self.after_hamming = self.after_hamming + '0'
@@ -384,6 +444,35 @@ class MainWidget(QWidget):
         except: # quando são detectados 2 bits errados, caímos nessa exceção, não é possível determinar a posição dos erros nem fazer sua correção
             self.after_hamming = self.CamadaEnlace.hamming_encoder.removeParityBits(self.mensagem_enviada_ou_recebida)
             self.Mensagem_hamming.Text.setText("Foram detectados 2 bits errados com a codificação Hamming, correção impossível")
+
+
+        
+        mensagem_hamming_revertido = self.after_hamming
+        self.Mensagem_hamming_revertido.setText(self.after_hamming)
+
+        # aqui fazemos a remoção do codigo de deteccao de erro
+        if(self.ErrorDetection == "ParityBit"):
+            self.without_error_detection = self.CamadaEnlace.removeBitParidade(mensagem_hamming_revertido)
+        elif(self.ErrorDetection == "CRC"):
+            self.without_error_detection = self.CRCMachine.removeCrc(mensagem_hamming_revertido)
+
+        self.Mensagem_sem_error_detection.Text.setText(self.without_error_detection)
+
+        # aqui fazemos o desenquadramento da mensagem recebida, dependendo do tipo de enquadramento utilizado      
+        if(self.Enquadramento == "Contagem"):
+            self.listaQuadros2 = list(map(self.CamadaEnlace.separaQuadrosContagemCaracteres, self.without_error_detection))
+        elif(self.Enquadramento == "ByteInsertion"):
+            self.listaQuadros2 = list(map(self.CamadaEnlace.separaQuadrosByteInsertion, self.without_error_detection))
+        elif(self.Enquadramento == "BitInsertion"):
+            self.listaQuadros2 = list(map(self.CamadaEnlace.separaQuadrosBitInsertion, self.without_error_detection))
+
+        self.mensagem_desenquadrada = "".join(self.listaQuadros2)
+
+        self.Mensagem_desenquadrada.Text.setText(self.mensagem_desenquadrada)
+
+        # aqui convertemos a mensagem desenquadrada em texto
+        mensagem_final = self.CamadaEnlace.bitsToMessage(self.mensagem_desenquadrada)
+        self.Final_mensagem.setText(mensagem_final)
  
     def mensagem_recebida(self,mensagem):
         """

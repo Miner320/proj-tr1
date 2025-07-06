@@ -283,6 +283,20 @@ class CamadaEnlace():
 
         return result
     
+    def bitsToMessage(self, binary_string):
+        """!
+        Função que transforma um binário em sua string equivalente seguindo a tabela ASCII
+        @param string binária
+        @return mensagem string de caracteres equivalente á string de binária inserida, seguindo a tabela ASCII
+        """
+        aux = []
+        for i in range(0, len(binary_string), 8):
+            byte = binary_string[i:i+8]
+            aux.append(chr(binaryToDecimal(byte)))
+        result = "".join(aux)
+
+        return result
+    
     def sliceMessage(self, string, tamanho):
         lista_quadros = []
         while(len(string)):
