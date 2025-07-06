@@ -18,6 +18,22 @@ def decimalToBinary(dec_number):
 
     return result
 
+def bitsToMessage(self, binary_string):
+
+
+    """!
+    Função que transforma um binário em sua string equivalente seguindo a tabela ASCII
+    @param string binária
+    @return mensagem string de caracteres equivalente á string de binária inserida, seguindo a tabela ASCII
+    """
+    aux = []
+    for i in range(0, len(binary_string), 8):
+        byte = binary_string[i:i+8]
+        aux.append(chr(binaryToDecimal(byte)))
+    result = "".join(aux)
+    return result
+
+
 def binaryToDecimal(bin_string):
     """!
     Função que converte bytes em números reais
@@ -386,7 +402,7 @@ class CamadaEnlace():
                 if(previous_escape_flag):
                     return_string = return_string
                 else:
-                    raise Exception("erro inserçao de bytes")
+                    raise Exception("erro de enquadramento na inserção de bytes")
                 
             if(not skip_byte):
                 return_string = return_string + temp
@@ -494,6 +510,11 @@ class CamadaEnlace():
         remainder = self.__crc_machine.crcEncode(message)
         return message+remainder
     
+    def crc32Verify(self, message):
+        return self.__crc_machine.verifyCrc(message)
+    
+    def crc32Remove(self, message):
+        return self.__crc_machine.removeCrc(message)
     
     def paridadePar(self, bit_string):
         """!

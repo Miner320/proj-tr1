@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout, QLabel, QLineEdit, QTextEdit
 from camadaFisica import CamadaFisica, GraphMaker
-from camadaEnlace import CamadaEnlace
+from camadaEnlace import CamadaEnlace, bitsToMessage
 from receptor import Receptor
 from transmissor import Transmissor
 import matplotlib.pyplot as plt
@@ -384,6 +384,58 @@ class MainWidget(QWidget):
         except: # quando são detectados 2 bits errados, caímos nessa exceção, não é possível determinar a posição dos erros nem fazer sua correção
             self.after_hamming = self.CamadaEnlace.hamming_encoder.removeParityBits(self.mensagem_enviada_ou_recebida)
             self.Mensagem_hamming.Text.setText("Foram detectados 2 bits errados com a codificação Hamming, correção impossível")
+
+        # aqui estao os protocolos de detecção de erro, caso algum erro seja detectado, será exibido um aviso de detecção ao invés da mensagem
+        if(self.ErrorDetection == "ParityBit"):
+            if(self.CamadaEnlace.verificaParidadePar(self.after_hamming) == "ok"):
+                self.after_error_detection = self.CamadaEnlace.removeBitParidade(self.after_hamming)
+                self.Mensagem_error_detection.Text.setText(self.after_error_detection)
+            else:
+                self.Mensagem_error_detection.Text.setText("Foi detectado erro com o bit de paridade")
+                self.after_error_detection = self.CamadaEnlace.removeBitParidade(self.after_hamming)
+        elif(self.ErrorDetection == "CRC"):
+            if(self.CamadaEnlace.crc32Verify(self.after_hamming) == "ok"):
+                self.after_error_detection = self.CamadaEnlace.crc32Remove(self.after_hamming)
+                self.Mensagem_error_detection.Text.setText(self.after_error_detection)
+            else:
+                self.Mensagem_error_detection.Text.setText("Foi detectado erro com o CRC32")
+                self.after_error_detection = self.CamadaEnlace.crc32Remove(self.after_hamming)
+
+        self.ErroDeEnquadramento = False
+        #aqui estao os protocolos pra desenquadrar a mensagem
+
+        if(self.Enquadramento == "Contagem"):
+            try:
+                self.listaQuadros = self.CamadaEnlace.separaQuadrosContagemCaracteres(self.after_error_detection)
+            except:
+                self.ErroDeEnquadramento = True
+                self.Mensagem_enquadramento.Text.setText("Foi detectado erro na contagem de caracteres")
+        elif(self.Enquadramento == "ByteInsertion"):
+            try:
+                self.listaQuadros = self.CamadaEnlace.separaQuadrosByteInsertion(self.after_error_detection)
+            except:
+                self.ErroDeEnquadramento = True
+                self.Mensagem_enquadramento.Text.setText("Foi detectado erro na inserção de bytes")
+        elif(self.Enquadramento == "BitInsertion"):
+            try:
+                self.listaQuadros = self.CamadaEnlace.separaQuadrosBitInsertion(self.after_error_detection)
+            except:
+                self.ErroDeEnquadramento = True
+                self.Mensagem_enquadramento.Text.setText("Foi detectado erro na inserção de bits")
+
+        # caso haja erro de enquadramento, mostramos um erro e encerramos a tentativa de mostrar a mensagem
+        if(self.ErroDeEnquadramento):
+            self.MessageLayout.Input.setText("não foi possível recuperar a mensagem devido a erro de enquadramento")
+            return
+        else:
+            self.msg_enquadrada = "".join(self.listaQuadros)
+            self.Mensagem_enquadramento.Text.setText(self.msg_enquadrada)
+
+        self.msg = bitsToMessage(self.msg_enquadrada)
+
+        self.MessageLayout.Input.setText(self.msg)
+        return
+
  
     def mensagem_recebida(self,mensagem):
         """
