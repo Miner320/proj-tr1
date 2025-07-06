@@ -18,7 +18,7 @@ def decimalToBinary(dec_number):
 
     return result
 
-def bitsToMessage(self, binary_string):
+def bitsToMessage(binary_string):
 
 
     """!

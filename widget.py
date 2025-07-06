@@ -376,7 +376,7 @@ class MainWidget(QWidget):
                             self.after_hamming = self.after_hamming + '0'
                     else:
                         self.after_hamming = self.after_hamming + self.mensagem_enviada_ou_recebida[i]
-            self.after_hamming = self.CamadaEnlace.hamming_encoder.removeParityBits(self.after_hamming)
+            self.after_hamming = self.CamadaEnlace.hamming_encoder.removeParityBits(self.mensagem_enviada_ou_recebida)
             self.Mensagem_hamming.Text.setText(self.after_hamming)
 
         except Exception as err:  # quando são detectados 2 bits errados, caímos nessa exceção, não é possível determinar a posição dos erros nem fazer sua correção
