@@ -7,23 +7,24 @@ class Receptor:
         Inicializa o receptor com o endereço do servidor.
         @param host: Endereço IP do servidor
         @param port: Porta do servidor
+        @param on_data_received: Callback para quando dados forem recebidos
         """
         if not isinstance(port, int):
             port = int(port)
 
         self.host = host
         self.port = port
-        self.running = True
+        self.running = False
         self.data = []
         self.server_thread: Thread
-        self.on_data_received = on_data_received  # Callback para quando dados forem recebidos
+        self.on_data_received = on_data_received
 
     def start(self):
         """!
         Inicia o servidor para receber mensagens.
         """
+        self.running = True
         self.server_thread = Thread(target=self._start_server)
-        self.server_thread.daemon = True
         self.server_thread.start()
 
     def send_response(self, conn, message):
@@ -49,12 +50,11 @@ class Receptor:
                 data = conn.recv(1024)
                 if not data:
                     break
-                self.data.append(data.decode('utf-8'))
-                print(f'Mensagem recebida: {self.data[-1]}')
+                print(f'Mensagem recebida: {data.decode('utf-8')}')
                 if self.on_data_received:
                     self.on_data_received(data.decode('utf-8'))
                 resp = data.decode('utf-8') + " Cliente: " + addr[0] + ":" + str(addr[1])
-                conn.send(resp.encode('utf-8'))  # Envia de volta a última mensagem recebida
+                conn.send(resp.encode('utf-8'))  # Envia de volta a última mensagem recebida adcionada do ip e porta do cliente.
             except Exception as e:
                 print(f'Erro ao receber dados: {e}')
             finally:
