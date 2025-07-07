@@ -4,8 +4,8 @@ class Transmissor:
     def __init__(self, server_address='localhost', server_port=64000):
         """!
         Inicializa o transmissor com o endereço do servidor.
-        @param host: Endereço IP do servidor
-        @param port: Porta do servidor
+        @param server_addres: Endereço IP do servidor
+        @param server_port: Porta do servidor
         """
         self.host = server_address
         self.port = server_port
@@ -22,19 +22,12 @@ class Transmissor:
         self.sock = skt.socket(skt.AF_INET, skt.SOCK_STREAM)
         self.sock.connect((server_address, server_port))
 
-    def sendmsg(self,msg,is_signal=False):
+    def sendmsg(self,msg):
         """!
         Envia uma mensagem para o servidor.
         @param msg: Mensagem a ser enviada
         """
-        if is_signal:
-            msg_traduzida = ''
-            for term in msg:
-                print(term)
-                msg_traduzida += str(term) + ' '
-            self.sock.sendall(msg_traduzida.encode('utf-8'))
-        else:
-            self.sock.sendall(msg)
+        self.sock.sendall(msg)
 
         recvmsg = self.sock.recv(1024)
 
