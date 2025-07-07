@@ -25,6 +25,7 @@ class Receptor:
         """
         self.running = True
         self.server_thread = Thread(target=self._start_server)
+        self.server_thread.daemon = True  # Permite que o thread seja encerrado quando o programa principal terminar
         self.server_thread.start()
 
     def send_response(self, conn, message):
