@@ -50,7 +50,7 @@ class Receptor:
                 data = conn.recv(1024)
                 if not data:
                     break
-                print(f'Mensagem recebida: {data.decode('utf-8')}')
+                print(f"Mensagem recebida: {data.decode('utf-8')}")
                 if self.on_data_received:
                     self.on_data_received(data.decode('utf-8'))
                 resp = data.decode('utf-8') + " Cliente: " + addr[0] + ":" + str(addr[1])
