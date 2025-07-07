@@ -265,7 +265,7 @@ class GraphMaker():
 
         ax.set_xlabel("Tempo")
         ax.set_ylabel("Tensão")
-        ax.set_title("Sinal Modulado")
+        ax.set_title("Sinal Codificado")
         ax.grid(visible=True)
         ax.plot(x_axis, temp_bits)
         plt.savefig("encoded.jpg")

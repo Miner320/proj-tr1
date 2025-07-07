@@ -346,6 +346,7 @@ class MainWidget(QWidget):
 
         self.mensagem_codificada = self.CamadaFisica.encode(self.after_hamming)
         self.mensagem_modulada = self.CamadaFisica.modulate(self.after_hamming)
+        print(self.mensagem_codificada)
 
         # adicionar aqui logica para enviar mensagem para o socket, importante incluir mecanismo para mudar taxa de erro
         if (self.Botao_enviar.InputProbErro.text() != '' and self.Botao_enviar.InputProbErro.text() != '0'):
@@ -362,6 +363,9 @@ class MainWidget(QWidget):
         self.transmissor.desconnect()
 
     def Receber_clicked(self):
+
+        self.mensagem_codificada = self.CamadaFisica.encode(self.mensagem_enviada_ou_recebida)
+        self.mensagem_modulada = self.CamadaFisica.modulate(self.mensagem_enviada_ou_recebida)
 
         try: # aqui tentamos detectar e corrigir erro de apenas 1 bit
             self.verificacaoHamming = self.CamadaEnlace.hamming_encoder.detectError(self.mensagem_enviada_ou_recebida)
@@ -457,7 +461,7 @@ class MainWidget(QWidget):
     def Codificado_clicked(self):
 
         if(self.CamadaFisica.modulacao_digital == "Manchester"):
-            self.GraphMaker.MakeManchesterGraph(self.after_hamming, 10)
+            self.GraphMaker.MakeManchesterGraph(self.mensagem_codificada, 10)
         else:
             self.GraphMaker.MakeEncodedGraph(self.after_hamming, 10)
 
