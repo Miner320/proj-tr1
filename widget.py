@@ -463,7 +463,7 @@ class MainWidget(QWidget):
         if(self.CamadaFisica.modulacao_digital == "Manchester"):
             self.GraphMaker.MakeManchesterGraph(self.mensagem_codificada, 10)
         else:
-            self.GraphMaker.MakeEncodedGraph(self.after_hamming, 10)
+            self.GraphMaker.MakeEncodedGraph(self.mensagem_codificada, 10)
 
         plt.imread("encoded.jpg")
         plt.show()
